@@ -15,6 +15,7 @@ import LockReport from "./pages/LockReport";
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
+import EkstrakurikulerPrestasi from "./pages/EkstrakurikulerPrestasi";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/subjects" element={<ProtectedRoute><Subjects /></ProtectedRoute>} />
           <Route path="/grades" element={<ProtectedRoute><GradeInput /></ProtectedRoute>} />
           <Route path="/attendance" element={<ProtectedRoute><Attendance /></ProtectedRoute>} />
+          <Route path="/ekstrakurikuler-prestasi" element={<ProtectedRoute><EkstrakurikulerPrestasi /></ProtectedRoute>} />
           <Route path="/preview" element={<ProtectedRoute><ReportPreview /></ProtectedRoute>} />
           <Route path="/lock" element={<ProtectedRoute><LockReport /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />

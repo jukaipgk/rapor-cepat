@@ -175,6 +175,7 @@ export type Database = {
           email: string | null
           id: string
           logo_url: string | null
+          logo_dinas_url: string | null
           nama_kepala_sekolah: string | null
           nama_sekolah: string
           nip_kepala_sekolah: string | null
@@ -191,6 +192,7 @@ export type Database = {
           email?: string | null
           id?: string
           logo_url?: string | null
+          logo_dinas_url?: string | null
           nama_kepala_sekolah?: string | null
           nama_sekolah: string
           nip_kepala_sekolah?: string | null
@@ -207,6 +209,7 @@ export type Database = {
           email?: string | null
           id?: string
           logo_url?: string | null
+          logo_dinas_url?: string | null
           nama_kepala_sekolah?: string | null
           nama_sekolah?: string
           nip_kepala_sekolah?: string | null

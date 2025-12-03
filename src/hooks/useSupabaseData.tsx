@@ -11,6 +11,7 @@ export interface DbSchoolSettings {
   semester: string;
   tahun_pelajaran: string;
   logo_url: string | null;
+  logo_dinas_url?: string | null;
   nama_kepala_sekolah: string | null;
   nip_kepala_sekolah: string | null;
   telepon: string | null;
@@ -61,6 +62,30 @@ export interface DbAttendance {
   sakit: number;
   izin: number;
   tanpa_keterangan: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DbEkstrakurikuler {
+  id: string;
+  student_id: string;
+  semester: string;
+  tahun_pelajaran: string;
+  nama_kegiatan: string;
+  predikat: string | null;
+  keterangan: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface DbPrestasi {
+  id: string;
+  student_id: string;
+  semester: string;
+  tahun_pelajaran: string;
+  jenis_prestasi: string;
+  tingkat: string | null;
+  keterangan: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -356,3 +381,114 @@ export function useUnlockReport() {
     },
   });
 }
+
+// Ekstrakurikuler
+export function useEkstrakurikuler() {
+  return useQuery({
+    queryKey: ["ekstrakurikuler"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("ekstrakurikuler").select("*");
+      if (error) throw error;
+      return data as DbEkstrakurikuler[];
+    },
+  });
+}
+
+export function useUpsertEkstrakurikuler() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (ekstrakurikuler: Omit<DbEkstrakurikuler, "id" | "created_at" | "updated_at">) => {
+      const { data: existing } = await supabase
+        .from("ekstrakurikuler")
+        .select("id")
+        .eq("student_id", ekstrakurikuler.student_id)
+        .eq("nama_kegiatan", ekstrakurikuler.nama_kegiatan)
+        .eq("semester", ekstrakurikuler.semester)
+        .eq("tahun_pelajaran", ekstrakurikuler.tahun_pelajaran)
+        .maybeSingle();
+
+      if (existing) {
+        const { error } = await supabase
+          .from("ekstrakurikuler")
+          .update(ekstrakurikuler)
+          .eq("id", existing.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("ekstrakurikuler").insert(ekstrakurikuler);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ekstrakurikuler"] });
+    },
+  });
+}
+
+export function useDeleteEkstrakurikuler() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("ekstrakurikuler").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ekstrakurikuler"] });
+    },
+  });
+}
+
+// Prestasi
+export function usePrestasi() {
+  return useQuery({
+    queryKey: ["prestasi"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("prestasi").select("*");
+      if (error) throw error;
+      return data as DbPrestasi[];
+    },
+  });
+}
+
+export function useUpsertPrestasi() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (prestasi: Omit<DbPrestasi, "id" | "created_at" | "updated_at">) => {
+      const { data: existing } = await supabase
+        .from("prestasi")
+        .select("id")
+        .eq("student_id", prestasi.student_id)
+        .eq("jenis_prestasi", prestasi.jenis_prestasi)
+        .eq("semester", prestasi.semester)
+        .eq("tahun_pelajaran", prestasi.tahun_pelajaran)
+        .maybeSingle();
+
+      if (existing) {
+        const { error } = await supabase
+          .from("prestasi")
+          .update(prestasi)
+          .eq("id", existing.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("prestasi").insert(prestasi);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["prestasi"] });
+    },
+  });
+}
+
+export function useDeletePrestasi() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("prestasi").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["prestasi"] });
+    },
+  });
+}
+

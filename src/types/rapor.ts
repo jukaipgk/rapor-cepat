@@ -51,6 +51,26 @@ export interface Attendance {
   tanpaKeterangan: number;
 }
 
+export interface Ekstrakurikuler {
+  id: string;
+  studentId: string;
+  semester: string;
+  tahunPelajaran: string;
+  namaKegiatan: string;
+  predikat?: string;
+  keterangan?: string;
+}
+
+export interface Prestasi {
+  id: string;
+  studentId: string;
+  semester: string;
+  tahunPelajaran: string;
+  jenisPrestasi: string;
+  tingkat?: string;
+  keterangan?: string;
+}
+
 export interface GradeDescriptionTemplate {
   minScore: number;
   maxScore: number;
