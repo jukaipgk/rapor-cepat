@@ -156,36 +156,37 @@ export default function ReportPreview() {
         {selectedStudent && currentStudent && (
           <div
             ref={reportRef}
-            className="print-report rounded-xl border border-border bg-card p-8 animate-fade-in"
+            className="print-report rounded-xl border border-border bg-white p-8 animate-fade-in"
+            style={{ color: '#1a1a1a', backgroundColor: '#ffffff' }}
           >
             {/* Kop Rapor */}
-            <div className="mb-8 border-b-2 border-foreground pb-4 text-center">
-              <h2 className="text-xl font-bold uppercase">
+            <div className="mb-8 border-b-2 border-gray-800 pb-4 text-center">
+              <h2 className="text-xl font-bold uppercase text-gray-900">
                 {schoolSettings?.nama_sekolah}
               </h2>
-              <p className="text-sm">{schoolSettings?.alamat}</p>
-              <p className="text-sm">
+              <p className="text-sm text-gray-700">{schoolSettings?.alamat}</p>
+              <p className="text-sm text-gray-700">
                 {schoolSettings?.telepon && `Telp: ${schoolSettings.telepon}`}
                 {schoolSettings?.email && ` | Email: ${schoolSettings.email}`}
               </p>
               {schoolSettings?.website && (
-                <p className="text-sm">{schoolSettings.website}</p>
+                <p className="text-sm text-gray-700">{schoolSettings.website}</p>
               )}
             </div>
 
             {/* Title */}
             <div className="mb-6 text-center">
-              <h3 className="text-lg font-bold uppercase">
+              <h3 className="text-lg font-bold uppercase text-gray-900">
                 Laporan Hasil Belajar Peserta Didik
               </h3>
-              <p className="text-sm">
+              <p className="text-sm text-gray-700">
                 Semester {schoolSettings?.semester === "1" ? "Ganjil" : "Genap"}{" "}
                 Tahun Pelajaran {schoolSettings?.tahun_pelajaran}
               </p>
             </div>
 
             {/* Student Info */}
-            <div className="mb-6 grid gap-2 text-sm md:grid-cols-2">
+            <div className="mb-6 grid gap-2 text-sm md:grid-cols-2 text-gray-800">
               <div className="flex">
                 <span className="w-40">Nama Peserta Didik</span>
                 <span>: {currentStudent.nama_lengkap}</span>
@@ -211,14 +212,14 @@ export default function ReportPreview() {
 
             {/* Grades Table */}
             <div className="mb-6">
-              <h4 className="mb-3 font-semibold">A. Nilai Akademik</h4>
+              <h4 className="mb-3 font-semibold text-gray-900">A. Nilai Akademik</h4>
               <Table>
                 <TableHeader>
-                  <TableRow className="bg-muted/50">
-                    <TableHead className="w-12 text-center">No</TableHead>
-                    <TableHead>Mata Pelajaran</TableHead>
-                    <TableHead className="w-24 text-center">Nilai</TableHead>
-                    <TableHead>Capaian Kompetensi</TableHead>
+                  <TableRow className="bg-gray-100">
+                    <TableHead className="w-12 text-center text-gray-900">No</TableHead>
+                    <TableHead className="text-gray-900">Mata Pelajaran</TableHead>
+                    <TableHead className="w-24 text-center text-gray-900">Nilai</TableHead>
+                    <TableHead className="text-gray-900">Capaian Kompetensi</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -227,13 +228,13 @@ export default function ReportPreview() {
                       (g) => g.subject_id === subject.id
                     );
                     return (
-                      <TableRow key={subject.id}>
-                        <TableCell className="text-center">{index + 1}</TableCell>
-                        <TableCell>{subject.nama}</TableCell>
-                        <TableCell className="text-center font-medium">
+                      <TableRow key={subject.id} className="border-gray-200">
+                        <TableCell className="text-center text-gray-800">{index + 1}</TableCell>
+                        <TableCell className="text-gray-800">{subject.nama}</TableCell>
+                        <TableCell className="text-center font-medium text-gray-900">
                           {grade?.nilai_akhir || "-"}
                         </TableCell>
-                        <TableCell className="text-sm">
+                        <TableCell className="text-sm text-gray-700">
                           {grade?.capaian_kompetensi || "-"}
                         </TableCell>
                       </TableRow>
@@ -245,19 +246,19 @@ export default function ReportPreview() {
 
             {/* Attendance */}
             <div className="mb-6">
-              <h4 className="mb-3 font-semibold">B. Ketidakhadiran</h4>
+              <h4 className="mb-3 font-semibold text-gray-900">B. Ketidakhadiran</h4>
               <div className="grid gap-2 text-sm md:grid-cols-3">
-                <div className="flex rounded-lg border border-border p-3">
-                  <span className="flex-1">Sakit</span>
-                  <span className="font-medium">{studentAttendance?.sakit || 0} hari</span>
+                <div className="flex rounded-lg border border-gray-300 p-3 bg-gray-50">
+                  <span className="flex-1 text-gray-700">Sakit</span>
+                  <span className="font-medium text-gray-900">{studentAttendance?.sakit || 0} hari</span>
                 </div>
-                <div className="flex rounded-lg border border-border p-3">
-                  <span className="flex-1">Izin</span>
-                  <span className="font-medium">{studentAttendance?.izin || 0} hari</span>
+                <div className="flex rounded-lg border border-gray-300 p-3 bg-gray-50">
+                  <span className="flex-1 text-gray-700">Izin</span>
+                  <span className="font-medium text-gray-900">{studentAttendance?.izin || 0} hari</span>
                 </div>
-                <div className="flex rounded-lg border border-border p-3">
-                  <span className="flex-1">Tanpa Keterangan</span>
-                  <span className="font-medium">
+                <div className="flex rounded-lg border border-gray-300 p-3 bg-gray-50">
+                  <span className="flex-1 text-gray-700">Tanpa Keterangan</span>
+                  <span className="font-medium text-gray-900">
                     {studentAttendance?.tanpa_keterangan || 0} hari
                   </span>
                 </div>
@@ -265,11 +266,11 @@ export default function ReportPreview() {
             </div>
 
             {/* Signatures */}
-            <div className="mt-12 grid gap-8 text-center md:grid-cols-2">
+            <div className="mt-12 grid gap-8 text-center md:grid-cols-2 text-gray-800">
               <div>
                 <p className="mb-16">Mengetahui,</p>
                 <p className="mb-16">Orang Tua/Wali</p>
-                <p className="border-b border-foreground"></p>
+                <p className="border-b border-gray-800"></p>
               </div>
               <div>
                 <p className="mb-2">
@@ -281,15 +282,15 @@ export default function ReportPreview() {
                   })}
                 </p>
                 <p className="mb-16">Wali Kelas</p>
-                <p className="font-medium">{currentStudent.nama_wali_kelas || "-"}</p>
+                <p className="font-medium text-gray-900">{currentStudent.nama_wali_kelas || "-"}</p>
               </div>
             </div>
 
-            <div className="mt-12 text-center">
+            <div className="mt-12 text-center text-gray-800">
               <p className="mb-2">Mengetahui,</p>
               <p className="mb-16">Kepala Sekolah</p>
-              <p className="font-medium">{schoolSettings?.nama_kepala_sekolah}</p>
-              <p className="text-sm">NIP. {schoolSettings?.nip_kepala_sekolah}</p>
+              <p className="font-medium text-gray-900">{schoolSettings?.nama_kepala_sekolah}</p>
+              <p className="text-sm text-gray-700">NIP. {schoolSettings?.nip_kepala_sekolah}</p>
             </div>
           </div>
         )}
