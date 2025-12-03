@@ -559,6 +559,9 @@
   /* Page setup */
   @page {
     size: A4;
-    margin: 20mm; /* Meningkatkan margin untuk cetak */
+    margin-top: 40mm;    /* 4 cm */
+    margin-bottom: 30mm; /* 3 cm */
+    margin-left: 40mm;   /* 4 cm */
+    margin-right: 30mm;  /* 3 cm */
   }
 }
