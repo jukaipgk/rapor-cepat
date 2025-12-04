@@ -13,7 +13,7 @@ export interface DbSchoolSettings {
   logo_url: string | null;
   logo_dinas_url?: string | null;
   nama_kepala_sekolah: string | null;
-  nip_kepala_sekolah: string | null;
+  niy_kepala_sekolah: string | null;
   telepon: string | null;
   email: string | null;
   website: string | null;

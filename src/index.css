@@ -507,12 +507,21 @@
     display: table-row !important;
   }
 
-  /* Page setup */
+  /* Page setup - A4 */
   @page {
     size: A4;
-    margin-top: 40mm;    /* 4 cm */
-    margin-bottom: 30mm; /* 3 cm */
-    margin-left: 40mm;   /* 4 cm */
-    margin-right: 30mm;  /* 3 cm */
+    margin-top: 20mm;    /* 2 cm */
+    margin-bottom: 20mm; /* 2 cm */
+    margin-left: 30mm;   /* 3 cm */
+    margin-right: 20mm;  /* 2 cm */
+  }
+
+  /* Page setup - F4/Folio (215.9mm x 330.2mm) */
+  @page folio {
+    size: 215.9mm 330.2mm;
+    margin-top: 25mm;    /* 2.5 cm */
+    margin-bottom: 25mm; /* 2.5 cm */
+    margin-left: 30mm;   /* 3 cm */
+    margin-right: 20mm;  /* 2 cm */
   }
 }

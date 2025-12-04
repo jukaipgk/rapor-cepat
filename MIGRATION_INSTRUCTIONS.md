@@ -1,4 +1,4 @@
-# Cara Menjalankan Migration Database
+# Cara Menjalankan Migration Database -
 
 Untuk membuat tabel `ekstrakurikuler` dan `prestasi` di Supabase, ikuti langkah berikut:
 

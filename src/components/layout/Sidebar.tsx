@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { useSchoolSettings } from "@/hooks/useSupabaseData";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
@@ -34,6 +35,7 @@ const menuItems = [
 export function Sidebar() {
   const location = useLocation();
   const { user } = useAuth();
+  const { data: schoolSettings } = useSchoolSettings();
 
   const { data: profile } = useQuery({
     queryKey: ["user-profile", user?.id],
@@ -123,7 +125,7 @@ export function Sidebar() {
           <div className="rounded-lg bg-sidebar-accent/50 p-3">
             <p className="text-xs text-sidebar-foreground/60">Semester</p>
             <p className="text-sm font-semibold text-sidebar-foreground">
-              Ganjil 2024/2025
+              {schoolSettings?.semester === "1" ? "Ganjil" : "Genap"} {schoolSettings?.tahun_pelajaran || "2024/2025"}
             </p>
           </div>
         </div>

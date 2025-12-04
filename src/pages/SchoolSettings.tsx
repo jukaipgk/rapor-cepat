@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
-import { Save, Building2, FileText, Loader2 } from "lucide-react";
+import { Save, Building2, FileText, Loader2, Image } from "lucide-react";
 
 interface FormData {
   nama_sekolah: string;
@@ -22,10 +22,12 @@ interface FormData {
   semester: string;
   tahun_pelajaran: string;
   nama_kepala_sekolah: string;
-  nip_kepala_sekolah: string;
+  niy_kepala_sekolah: string;
   telepon: string;
   email: string;
   website: string;
+  logo_url: string;
+  logo_yayasan_url: string;
 }
 
 export default function SchoolSettings() {
@@ -39,10 +41,12 @@ export default function SchoolSettings() {
     semester: "1",
     tahun_pelajaran: "2024/2025",
     nama_kepala_sekolah: "",
-    nip_kepala_sekolah: "",
+    niy_kepala_sekolah: "",
     telepon: "",
     email: "",
     website: "",
+    logo_url: "",
+    logo_yayasan_url: "",
   });
 
   useEffect(() => {
@@ -54,10 +58,12 @@ export default function SchoolSettings() {
         semester: schoolSettings.semester,
         tahun_pelajaran: schoolSettings.tahun_pelajaran,
         nama_kepala_sekolah: schoolSettings.nama_kepala_sekolah || "",
-        nip_kepala_sekolah: schoolSettings.nip_kepala_sekolah || "",
+        niy_kepala_sekolah: (schoolSettings as any).niy_kepala_sekolah || "",
         telepon: schoolSettings.telepon || "",
         email: schoolSettings.email || "",
         website: schoolSettings.website || "",
+        logo_url: schoolSettings.logo_url || "",
+        logo_yayasan_url: (schoolSettings as any).logo_yayasan_url || "",
       });
     }
   }, [schoolSettings]);
@@ -181,6 +187,72 @@ export default function SchoolSettings() {
             </div>
           </div>
 
+          {/* Logo Sekolah */}
+          <div className="rounded-xl border border-border bg-card p-6">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="rounded-lg bg-accent/10 p-2">
+                <Image className="h-5 w-5 text-accent-foreground" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold">Logo Sekolah</h2>
+                <p className="text-sm text-muted-foreground">
+                  Logo untuk kop rapor
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="logo_url">URL Logo Sekolah</Label>
+                <Input
+                  id="logo_url"
+                  value={formData.logo_url}
+                  onChange={(e) => handleChange("logo_url", e.target.value)}
+                  placeholder="https://example.com/logo-sekolah.png"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Logo sekolah (kiri pada kop rapor)
+                </p>
+                {formData.logo_url && (
+                  <div className="flex items-center justify-center rounded-lg border border-dashed border-border bg-muted/50 p-4 mt-2">
+                    <img
+                      src={formData.logo_url}
+                      alt="Logo Sekolah"
+                      className="max-h-24 max-w-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="logo_yayasan_url">URL Logo Yayasan/Dinas</Label>
+                <Input
+                  id="logo_yayasan_url"
+                  value={formData.logo_yayasan_url}
+                  onChange={(e) => handleChange("logo_yayasan_url", e.target.value)}
+                  placeholder="https://example.com/logo-yayasan.png"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Logo yayasan/dinas pendidikan (kanan pada kop rapor)
+                </p>
+                {formData.logo_yayasan_url && (
+                  <div className="flex items-center justify-center rounded-lg border border-dashed border-border bg-muted/50 p-4 mt-2">
+                    <img
+                      src={formData.logo_yayasan_url}
+                      alt="Logo Yayasan/Dinas"
+                      className="max-h-24 max-w-full object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Periode & Kepala Sekolah */}
           <div className="rounded-xl border border-border bg-card p-6">
             <div className="mb-6 flex items-center gap-3">
@@ -231,14 +303,15 @@ export default function SchoolSettings() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="nip_kepala_sekolah">NIP Kepala Sekolah</Label>
+                <Label htmlFor="niy_kepala_sekolah">NIY Kepala Sekolah</Label>
                 <Input
-                  id="nip_kepala_sekolah"
-                  value={formData.nip_kepala_sekolah}
-                  onChange={(e) => handleChange("nip_kepala_sekolah", e.target.value)}
-                  placeholder="196501011990031001"
+                  id="niy_kepala_sekolah"
+                  value={formData.niy_kepala_sekolah}
+                  onChange={(e) => handleChange("niy_kepala_sekolah", e.target.value)}
+                  placeholder="123456789"
                 />
               </div>
+
             </div>
           </div>
 

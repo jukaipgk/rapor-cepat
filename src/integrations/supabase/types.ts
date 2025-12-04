@@ -178,7 +178,7 @@ export type Database = {
           logo_dinas_url: string | null
           nama_kepala_sekolah: string | null
           nama_sekolah: string
-          nip_kepala_sekolah: string | null
+          niy_kepala_sekolah: string | null
           npsn: string
           semester: string
           tahun_pelajaran: string
@@ -195,7 +195,7 @@ export type Database = {
           logo_dinas_url?: string | null
           nama_kepala_sekolah?: string | null
           nama_sekolah: string
-          nip_kepala_sekolah?: string | null
+          niy_kepala_sekolah?: string | null
           npsn: string
           semester?: string
           tahun_pelajaran?: string
@@ -212,7 +212,7 @@ export type Database = {
           logo_dinas_url?: string | null
           nama_kepala_sekolah?: string | null
           nama_sekolah?: string
-          nip_kepala_sekolah?: string | null
+          niy_kepala_sekolah?: string | null
           npsn?: string
           semester?: string
           tahun_pelajaran?: string

@@ -48,7 +48,7 @@ export default function ReportPreview() {
       .print-report h1, .print-report h2, .print-report h3, .print-report h4 { color: #000; }
       .kop-rapor { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom: 8px; padding: 6px 0; border-bottom: 3px double #000; }
       .kop-logos { display:flex; align-items:center; gap:8px; }
-      .kop-logos img { display:block; max-height:64px; max-width:120px; height:auto; }
+      .kop-logos img { display:block; height:80px; width:auto; max-width:100%; object-fit:contain; }
       table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10pt; }
       col.no-col { width:5%; }
       col.subject-col { width:45%; }
@@ -56,10 +56,11 @@ export default function ReportPreview() {
       col.competency-col { width:35%; }
       th, td { border: 1px solid #000; padding: 6px 6px; vertical-align: top; word-break: break-word; }
       th { background: #f0f0f0; text-align: center; font-weight: 600; }
+      td[style*="text-align: center"], td[style*="text-align:center"] { text-align: center !important; }
       .student-info { display: block; margin-bottom: 8px; }
       .student-info .row { display:flex; justify-content:space-between; }
       .attendance_tbl td:first-child { width: 35%; font-weight: 600; }
-      @page { size: A4; margin: 0; }
+      @page { size: A4; margin: 20mm 20mm 20mm 30mm; }
       @media print { button { display: none; } }
     `;
 
@@ -212,14 +213,14 @@ export default function ReportPreview() {
                 style={{ color: '#1a1a1a', backgroundColor: '#ffffff' }}
               >
                 {/* Kop Rapor */}
-                <div className="kop-rapor mb-6" style={{paddingBottom: '10px', borderBottom: '3px double black'}}>
-                  <div className="kop-logos" style={{width: '18%', textAlign: 'left'}}>
-                    {schoolSettings?.logo_dinas_url ? (
-                      <img src={schoolSettings.logo_dinas_url} alt="Logo Dinas" />
+                <div className="kop-rapor mb-6" style={{display: 'flex', alignItems: 'center', paddingBottom: '10px', borderBottom: '3px double black'}}>
+                  <div className="kop-logos" style={{width: '15%', textAlign: 'left', display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
+                    {schoolSettings?.logo_url ? (
+                      <img src={schoolSettings.logo_url} alt="Logo Sekolah" style={{height: '80px', width: 'auto', maxWidth: '100%', objectFit: 'contain'}} />
                     ) : null}
                   </div>
 
-                  <div style={{width: '64%', textAlign: 'center'}}>
+                  <div style={{width: '70%', textAlign: 'center', padding: '0 10px'}}>
                     <h2 className="text-lg font-bold uppercase" style={{margin: '0 0 4px 0'}}>
                       {schoolSettings?.nama_sekolah}
                     </h2>
@@ -233,9 +234,9 @@ export default function ReportPreview() {
                     )}
                   </div>
 
-                  <div className="kop-logos" style={{width: '18%', textAlign: 'right'}}>
-                    {schoolSettings?.logo_url ? (
-                      <img src={schoolSettings.logo_url} alt="Logo Sekolah" />
+                  <div className="kop-logos" style={{width: '15%', textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
+                    {(schoolSettings as any)?.logo_yayasan_url ? (
+                      <img src={(schoolSettings as any).logo_yayasan_url} alt="Logo Yayasan/Dinas" style={{height: '80px', width: 'auto', maxWidth: '100%', objectFit: 'contain'}} />
                     ) : null}
                   </div>
                 </div>
@@ -250,35 +251,32 @@ export default function ReportPreview() {
                   </p>
                 </div>
 
-                {/* Student Info - three column layout */}
+                {/* Student Info - two column layout */}
                 <table className="borderless-table w-full mb-4" style={{border: 'none', borderCollapse: 'collapse'}}>
                   <tbody>
                     <tr>
-                      <td style={{width: '15%', border: 'none', padding: '4px 0'}}>Nama Peserta Didik</td>
+                      <td style={{width: '18%', border: 'none', padding: '4px 0'}}>Nama Lengkap</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{currentStudent.nama_lengkap}</td>
-                      <td style={{width: '5%', border: 'none', padding: '4px 0'}}></td>
+                      <td style={{width: '30%', border: 'none', padding: '4px 0'}}>{currentStudent.nama_lengkap}</td>
                       <td style={{width: '15%', border: 'none', padding: '4px 0'}}>Kelas / Fase</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{currentStudent.kelas}</td>
+                      <td style={{width: '33%', border: 'none', padding: '4px 0'}}>{currentStudent.kelas}</td>
                     </tr>
                     <tr>
-                      <td style={{width: '15%', border: 'none', padding: '4px 0'}}>NISN</td>
+                      <td style={{width: '18%', border: 'none', padding: '4px 0'}}>NISN</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{currentStudent.nis}</td>
-                      <td style={{width: '5%', border: 'none', padding: '4px 0'}}></td>
+                      <td style={{width: '30%', border: 'none', padding: '4px 0'}}>{currentStudent.nis}</td>
                       <td style={{width: '15%', border: 'none', padding: '4px 0'}}>Semester</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{schoolSettings?.semester === "1" ? "Ganjil" : "Genap"}</td>
+                      <td style={{width: '33%', border: 'none', padding: '4px 0'}}>{schoolSettings?.semester === "1" ? "Ganjil" : "Genap"}</td>
                     </tr>
                     <tr>
-                      <td style={{width: '15%', border: 'none', padding: '4px 0'}}>Nama Sekolah</td>
+                      <td style={{width: '18%', border: 'none', padding: '4px 0'}}>NPSN</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{schoolSettings?.nama_sekolah}</td>
-                      <td style={{width: '5%', border: 'none', padding: '4px 0'}}></td>
+                      <td style={{width: '30%', border: 'none', padding: '4px 0'}}>{schoolSettings?.npsn}</td>
                       <td style={{width: '15%', border: 'none', padding: '4px 0'}}>Tahun Ajaran</td>
                       <td style={{width: '2%', border: 'none', padding: '4px 0', textAlign: 'center'}}>:</td>
-                      <td style={{width: '13%', border: 'none', padding: '4px 0'}}>{schoolSettings?.tahun_pelajaran}</td>
+                      <td style={{width: '33%', border: 'none', padding: '4px 0'}}>{schoolSettings?.tahun_pelajaran}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -296,9 +294,9 @@ export default function ReportPreview() {
                   </colgroup>
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="border border-gray-300 p-2 text-center no-col">No</th>
+                      <th className="border border-gray-300 p-2 no-col" style={{textAlign: 'center'}}>No</th>
                       <th className="border border-gray-300 p-2 subject-col">Mata Pelajaran</th>
-                      <th className="border border-gray-300 p-2 text-center grade-col">Nilai</th>
+                      <th className="border border-gray-300 p-2 grade-col" style={{textAlign: 'center'}}>Nilai</th>
                       <th className="border border-gray-300 p-2 competency-col">Capaian Kompetensi</th>
                     </tr>
                   </thead>
@@ -307,9 +305,9 @@ export default function ReportPreview() {
                       const grade = studentGrades.find((g) => g.subject_id === subject.id);
                       return (
                         <tr key={subject.id}>
-                          <td className="border border-gray-300 p-2 text-center no-col">{index + 1}</td>
+                          <td className="border border-gray-300 p-2 no-col" style={{textAlign: 'center'}}>{index + 1}</td>
                           <td className="border border-gray-300 p-2 subject-col">{subject.nama}</td>
-                          <td className="border border-gray-300 p-2 text-center font-medium grade-col">
+                          <td className="border border-gray-300 p-2 font-medium grade-col" style={{textAlign: 'center'}}>
                             {grade?.nilai_akhir || "-"}
                           </td>
                           <td className="border border-gray-300 p-2 competency-col">
@@ -326,16 +324,16 @@ export default function ReportPreview() {
                 <table className="attendance_tbl w-full border border-gray-300 border-collapse mb-8">
                   <tbody>
                     <tr>
-                      <td className="border border-gray-300 p-2">Sakit</td>
-                      <td className="border border-gray-300 p-2">{studentAttendance?.sakit || 0} hari</td>
+                      <td className="border border-gray-300 p-2" style={{width: '85%'}}>Sakit</td>
+                      <td className="border border-gray-300 p-2" style={{width: '15%', textAlign: 'center'}}>{studentAttendance?.sakit || 0} hari</td>
                     </tr>
                     <tr>
                       <td className="border border-gray-300 p-2">Izin</td>
-                      <td className="border border-gray-300 p-2">{studentAttendance?.izin || 0} hari</td>
+                      <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{studentAttendance?.izin || 0} hari</td>
                     </tr>
                     <tr>
                       <td className="border border-gray-300 p-2">Tanpa Keterangan</td>
-                      <td className="border border-gray-300 p-2">{studentAttendance?.tanpa_keterangan || 0} hari</td>
+                      <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{studentAttendance?.tanpa_keterangan || 0} hari</td>
                     </tr>
                   </tbody>
                 </table>
@@ -345,19 +343,19 @@ export default function ReportPreview() {
                 <table className="w-full border border-gray-300 border-collapse mb-4">
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="border border-gray-300 p-2 text-center" style={{width: '5%'}}>No</th>
-                      <th className="border border-gray-300 p-2" style={{width: '40%'}}>Kegiatan Ekstrakurikuler</th>
-                      <th className="border border-gray-300 p-2" style={{width: '30%'}}>Predikat</th>
-                      <th className="border border-gray-300 p-2" style={{width: '25%'}}>Keterangan</th>
+                      <th className="border border-gray-300 p-2" style={{width: '5%', textAlign: 'center'}}>No</th>
+                      <th className="border border-gray-300 p-2" style={{width: '45%'}}>Kegiatan Ekstrakurikuler</th>
+                      <th className="border border-gray-300 p-2" style={{width: '15%', textAlign: 'center'}}>Predikat</th>
+                      <th className="border border-gray-300 p-2" style={{width: '35%'}}>Keterangan</th>
                     </tr>
                   </thead>
                   <tbody>
                     {studentEkstrakurikuler.length > 0 ? (
                       studentEkstrakurikuler.map((e, index) => (
                         <tr key={e.id}>
-                          <td className="border border-gray-300 p-2 text-center">{index + 1}</td>
+                          <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{index + 1}</td>
                           <td className="border border-gray-300 p-2">{e.nama_kegiatan}</td>
-                          <td className="border border-gray-300 p-2">{e.predikat || '-'}</td>
+                          <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{e.predikat || '-'}</td>
                           <td className="border border-gray-300 p-2">{e.keterangan || '-'}</td>
                         </tr>
                       ))
@@ -374,19 +372,19 @@ export default function ReportPreview() {
                 <table className="w-full border border-gray-300 border-collapse mb-4">
                   <thead>
                     <tr className="bg-gray-100">
-                      <th className="border border-gray-300 p-2 text-center" style={{width: '5%'}}>No</th>
-                      <th className="border border-gray-300 p-2" style={{width: '40%'}}>Jenis Prestasi</th>
-                      <th className="border border-gray-300 p-2" style={{width: '30%'}}>Tingkat</th>
-                      <th className="border border-gray-300 p-2" style={{width: '25%'}}>Keterangan</th>
+                      <th className="border border-gray-300 p-2" style={{width: '5%', textAlign: 'center'}}>No</th>
+                      <th className="border border-gray-300 p-2" style={{width: '45%'}}>Jenis Prestasi</th>
+                      <th className="border border-gray-300 p-2" style={{width: '15%', textAlign: 'center'}}>Tingkat</th>
+                      <th className="border border-gray-300 p-2" style={{width: '35%'}}>Keterangan</th>
                     </tr>
                   </thead>
                   <tbody>
                     {studentPrestasi.length > 0 ? (
                       studentPrestasi.map((p, index) => (
                         <tr key={p.id}>
-                          <td className="border border-gray-300 p-2 text-center">{index + 1}</td>
+                          <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{index + 1}</td>
                           <td className="border border-gray-300 p-2">{p.jenis_prestasi}</td>
-                          <td className="border border-gray-300 p-2">{p.tingkat || '-'}</td>
+                          <td className="border border-gray-300 p-2" style={{textAlign: 'center'}}>{p.tingkat || '-'}</td>
                           <td className="border border-gray-300 p-2">{p.keterangan || '-'}</td>
                         </tr>
                       ))
@@ -410,47 +408,41 @@ export default function ReportPreview() {
                   {/* Space untuk tanggapan */}
                 </div>
 
-                {/* Signatures - borderless two-column table (Orang Tua/Wali & Wali Kelas) */}
-                <div style={{marginBottom: '16px'}}></div>
-                <div style={{marginBottom: '16px'}}></div>
-                <table className="borderless-table w-full mt-8">
+                {/* Signatures - Wali Murid (kiri) & Wali Kelas (kanan) */}
+                <div style={{marginTop: '40px'}}></div>
+                <table className="borderless-table w-full" style={{fontSize: '11pt'}}>
                   <tbody>
                     <tr>
-                      <td style={{width: '50%', textAlign: 'center', border: 'none', padding: '0'}}>
+                      <td style={{width: '50%', textAlign: 'center', border: 'none', padding: '0 30px 0 0', verticalAlign: 'top'}}>
                         <div style={{marginBottom: '8px'}}>Mengetahui,</div>
-                        <div style={{marginBottom: '60px'}}>Orang Tua/Wali</div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div style={{borderBottom: '1px solid #000', width: '70%', margin: '0 auto', height: '20px'}}></div>
+                        <div style={{marginBottom: '8px'}}>Orang Tua/Wali</div>
+                        <div style={{marginTop: '60px'}}></div>
+                        <div style={{borderBottom: '1px solid #000', width: '70mm', margin: '0 auto'}}></div>
                       </td>
-                      <td style={{width: '50%', textAlign: 'center', border: 'none', padding: '0'}}>
-                        <div style={{marginBottom: '8px'}}>Jakarta, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
-                        <div style={{marginBottom: '8px'}}></div>
+                      <td style={{width: '50%', textAlign: 'center', border: 'none', padding: '0 0 0 30px', verticalAlign: 'top'}}>
                         <div style={{marginBottom: '8px'}}>Wali Kelas</div>
-                        <div style={{marginBottom: '60px'}}></div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div>{currentStudent?.nama_wali_kelas || '---'}</div>
+                        <div style={{marginBottom: '8px'}}>&nbsp;</div>
+                        <div style={{marginTop: '60px'}}></div>
+                        <div style={{borderBottom: '1px solid #000', width: '70mm', margin: '0 auto'}}></div>
+                        <div style={{marginTop: '4px'}}>{currentStudent?.nama_wali_kelas || '.........................'}</div>
                       </td>
                     </tr>
                   </tbody>
                 </table>
 
-                {/* Two line breaks above Kepala Sekolah signature table */}
-                <div style={{height: '16px'}}></div>
-                <div style={{height: '16px'}}></div>
-
-                {/* Kepala Sekolah - single centered signature table */}
-                <table className="borderless-table w-full mt-4">
+                {/* Kepala Sekolah - tengah bawah dengan tanggal */}
+                <div style={{marginTop: '30px'}}></div>
+                <table className="borderless-table w-full" style={{fontSize: '11pt'}}>
                   <tbody>
                     <tr>
                       <td style={{textAlign: 'center', border: 'none', padding: '0'}}>
+                        <div style={{marginBottom: '8px'}}>Jakarta, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
                         <div style={{marginBottom: '8px'}}>Mengetahui,</div>
-                        <div style={{marginBottom: '60px'}}>Kepala Sekolah</div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div style={{marginBottom: '8px'}}></div>
-                        <div style={{marginBottom: '8px'}}>{schoolSettings?.nama_kepala_sekolah || '---'}</div>
-                        <div className="text-sm">{schoolSettings?.nip_kepala_sekolah ? `NIP. ${schoolSettings.nip_kepala_sekolah}` : ''}</div>
+                        <div style={{marginBottom: '8px'}}>Kepala Sekolah</div>
+                        <div style={{marginTop: '60px'}}></div>
+                        <div style={{borderBottom: '1px solid #000', width: '70mm', margin: '0 auto'}}></div>
+                        <div style={{marginTop: '4px'}}>{schoolSettings?.nama_kepala_sekolah || '.........................'}</div>
+                        <div style={{fontSize: '10pt'}}>{(schoolSettings as any)?.niy_kepala_sekolah ? `NIY. ${(schoolSettings as any).niy_kepala_sekolah}` : ''}</div>
                       </td>
                     </tr>
                   </tbody>
